@@ -1,15 +1,19 @@
-Package: uls
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Package: puls
+Title: Misc Functions of the Laboratory of Bioclimatology, PULS Poznan 
+Version: 0.0.1
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Jakub",
+           family = "Nowosad",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+           email = "nowosad.jakub@gmail.com",
+           comment = c(ORCID = "0000-0002-1057-3721"))
+Description: A set of tools to read and validate data obtained by the Laboratory of Bioclimatology, PULS Poznan.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to
     pick a license
+Depends: 
+    R (>= 3.6)
+Imports:
+    readr
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

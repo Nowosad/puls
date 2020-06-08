@@ -1,3 +1,5 @@
-^uls\.Rproj$
+^puls\.Rproj$
 ^\.Rproj\.user$
 ^data-raw$
+^README\.Rmd$
+temp.md
