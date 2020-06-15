@@ -1,6 +1,6 @@
 Package: puls
 Title: Misc Functions of the Laboratory of Bioclimatology, PULS Poznan 
-Version: 0.0.1
+Version: 0.1.0
 Authors@R: 
     person(given = "Jakub",
            family = "Nowosad",
@@ -13,7 +13,11 @@ License: `use_mit_license()`, `use_gpl3_license()` or friends to
 Depends: 
     R (>= 3.6)
 Imports:
-    readr
+    dplyr,
+    tidyr,
+    stringr,
+    readr,
+    magrittr
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
