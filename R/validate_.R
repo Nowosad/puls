@@ -27,33 +27,41 @@ validate_nan = function(y){
 #' @name validate_
 #' @export
 validate_min = function(y, param_df){
-  correct_df = y[["correct_df"]]
-  error_df = y[["error_df"]]
+  if (!is.na(param_df$min_value)){
+    correct_df = y[["correct_df"]]
+    error_df = y[["error_df"]]
 
-  new_error_df = correct_df[correct_df$value < param_df$min_value, c("TIMESTAMP", "RECORD", "name", "value")]
-  new_error_df$problem = "Values below the expected minimum"
+    new_error_df = correct_df[correct_df$value < param_df$min_value, c("TIMESTAMP", "RECORD", "name", "value")]
+    new_error_df$problem = "Values below the expected minimum"
 
-  error_df = rbind(error_df, new_error_df)
-  correct_df = correct_df[correct_df$value >= param_df$min_value, ]
+    error_df = rbind(error_df, new_error_df)
+    correct_df = correct_df[correct_df$value >= param_df$min_value, ]
 
-  list(correct_df = correct_df,
-       error_df = error_df)
+    list(correct_df = correct_df,
+         error_df = error_df)
+  } else {
+    y
+  }
 }
 
 #' @name validate_
 #' @export
 validate_max = function(y, param_df){
-  correct_df = y[["correct_df"]]
-  error_df = y[["error_df"]]
+  if (!is.na(param_df$max_value)){
+    correct_df = y[["correct_df"]]
+    error_df = y[["error_df"]]
 
-  new_error_df = correct_df[correct_df$value > param_df$max_value, c("TIMESTAMP", "RECORD", "name", "value")]
-  new_error_df$problem = "Values above the expected maximum"
+    new_error_df = correct_df[correct_df$value > param_df$max_value, c("TIMESTAMP", "RECORD", "name", "value")]
+    new_error_df$problem = "Values above the expected maximum"
 
-  error_df = rbind(error_df, new_error_df)
-  correct_df = correct_df[correct_df$value <= param_df$max_value, ]
+    error_df = rbind(error_df, new_error_df)
+    correct_df = correct_df[correct_df$value <= param_df$max_value, ]
 
-  list(correct_df = correct_df,
-       error_df = error_df)
+    list(correct_df = correct_df,
+         error_df = error_df)
+  } else {
+    y
+  }
 }
 
 #' @name validate_
