@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples
-#' ghg_filepath = system.file("ghg/2020-02-19T220000_AIU-0874.ghg", package = "uls")
+#' ghg_filepath = system.file("ghg/2020-02-19T220000_AIU-0874.ghg", package = "puls")
 #' my_ghg = read_ghg(ghg_filepath)
 #' head(my_ghg)
 read_ghg = function(file){
