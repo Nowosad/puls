@@ -6,7 +6,6 @@
 \usage{
 validator(
   x,
-  parameter,
   start_date = as.Date("2019-07-25"),
   end_date = as.Date("2019-07-30")
 )
