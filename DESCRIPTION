@@ -1,13 +1,13 @@
 Package: puls
 Title: Misc Functions of the Laboratory of Bioclimatology, PULS Poznan 
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     person(given = "Jakub",
            family = "Nowosad",
            role = c("aut", "cre"),
            email = "nowosad.jakub@gmail.com",
            comment = c(ORCID = "0000-0002-1057-3721"))
-Description: A set of tools to read and validate data obtained by the Laboratory of Bioclimatology, PULS Poznan.
+Description: A set of tools to read and validate data gathered by the Laboratory of Bioclimatology, PULS Poznan.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to
     pick a license
 Depends: 
@@ -17,6 +17,7 @@ Imports:
     tidyr,
     stringr,
     readr,
+    purrr,
     magrittr
 Encoding: UTF-8
 LazyData: true

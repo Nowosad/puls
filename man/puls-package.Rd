@@ -6,7 +6,7 @@
 \alias{puls-package}
 \title{puls: Misc Functions of the Laboratory of Bioclimatology, PULS Poznan}
 \description{
-A set of tools to read and validate data obtained by the Laboratory of Bioclimatology, PULS Poznan.
+A set of tools to read and validate data gathered by the Laboratory of Bioclimatology, PULS Poznan.
 }
 \author{
 \strong{Maintainer}: Jakub Nowosad \email{nowosad.jakub@gmail.com} (\href{https://orcid.org/0000-0002-1057-3721}{ORCID})
