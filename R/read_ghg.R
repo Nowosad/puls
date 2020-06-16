@@ -24,6 +24,7 @@ read_ghg = function(file){
   readr::read_tsv(
     paste0(ghg_tempdir, "/", ghg_basename, ".data"),
     skip = 7,
+    col_types = readr::cols(),
     col_names = TRUE#,
     # sep = "\t"
   )

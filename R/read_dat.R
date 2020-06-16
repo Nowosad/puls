@@ -18,6 +18,7 @@ read_dat = function(file){
   readr::read_csv(
     file,
     skip = 4,
+    col_types = readr::cols(),
     col_names = col_names
   )
 }
