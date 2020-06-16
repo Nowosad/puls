@@ -1,10 +1,16 @@
-#' Title
+#' Validate Several Separate Border Cases
 #'
-#' @param y a
-#' @param param_df b
-#' @param howmanysd c
+#' This function is used iternally in the `validator()` function.
 #'
-#' @return d
+#' @param y A list with two data frames - `correct_df` and `error_df`
+#' @param param_df A data frame with basic parameters' ranges
+#' @param howmanysd Specifies how many standard deviations from the provided mean are accepted
+#'
+#' @return A list with two data frames - `correct_df` and `error_df`.
+#'     `correct_df` stores data without any detected problems and
+#'     `error_df` stores data with detected problems together with
+#'     a specified problem description.
+#'
 #' @rdname validate_
 #' @export
 #'

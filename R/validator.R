@@ -1,16 +1,21 @@
-#' Title
+#' Validates Data
 #'
-#' @param x
-#' @param start_date
-#' @param end_date
+#' @param x Path to a `.dat` file
+#' @param site_code Code of the site, either `"KU"`, `"BR"`, `"RZ"`
+#' @param start_date The start date of the validation period
+#' @param end_date The end state of the validation period
 #'
-#' @return
+#' @return A data frame with possible errors
 #' @export
 #'
 #' @examples
-validator = function(x, start_date = as.Date("2019-07-25"), end_date = as.Date("2019-07-30")){
+#' dat_filepath = system.file("dat/CR3000_Rain.dat", package = "puls")
+#' validator(dat_filepath, site_code = "BR",
+#'     start_date = as.Date("2017-07-25"), end_date = as.Date("2019-07-30"))
+#'
+validator = function(x, site_code = NULL, start_date = as.Date("2019-07-25"), end_date = as.Date("2019-07-30")){
   x %>%
-    cleaner() %>%
+    cleaner(site_code = site_code) %>%
     dplyr::group_split(parameter) %>%
     purrr::map(single_validator, start_date, end_date) %>%
     purrr::map_df("error_df") %>%

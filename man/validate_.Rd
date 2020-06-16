@@ -6,7 +6,7 @@
 \alias{validate_min}
 \alias{validate_max}
 \alias{validate_longterm}
-\title{Title}
+\title{Validate Several Separate Border Cases}
 \usage{
 validate_nan(y)
 
@@ -17,15 +17,18 @@ validate_max(y, param_df)
 validate_longterm(y, param_df, howmanysd = 3)
 }
 \arguments{
-\item{y}{a}
+\item{y}{A list with two data frames - \code{correct_df} and \code{error_df}}
 
-\item{param_df}{b}
+\item{param_df}{A data frame with basic parameters' ranges}
 
-\item{howmanysd}{c}
+\item{howmanysd}{Specifies how many standard deviations from the provided mean are accepted}
 }
 \value{
-d
+A list with two data frames - \code{correct_df} and \code{error_df}.
+\code{correct_df} stores data without any detected problems and
+\code{error_df} stores data with detected problems together with
+a specified problem description.
 }
 \description{
-Title
+This function is used iternally in the \code{validator()} function.
 }

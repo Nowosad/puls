@@ -2,16 +2,20 @@
 % Please edit documentation in R/cleaner.R
 \name{cleaner}
 \alias{cleaner}
-\title{Title}
+\title{Prepares Input Data}
 \usage{
-cleaner(x)
+cleaner(x, site_code = NULL)
 }
 \arguments{
-\item{x}{}
+\item{Path}{to a \code{.dat} file}
 }
 \value{
-
+A reformatted data frame with a TIMESTAMP, RECORD, name, value, parameter, and site
 }
 \description{
-Title
+This function is used iternally in the \code{validator()} function.
+}
+\examples{
+dat_filepath = system.file("dat/CR3000_Rain.dat", package = "puls")
+cleaner(dat_filepath, "BR")
 }

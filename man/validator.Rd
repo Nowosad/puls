@@ -2,20 +2,33 @@
 % Please edit documentation in R/validator.R
 \name{validator}
 \alias{validator}
-\title{Title}
+\title{Validates Data}
 \usage{
 validator(
   x,
+  site_code = NULL,
   start_date = as.Date("2019-07-25"),
   end_date = as.Date("2019-07-30")
 )
 }
 \arguments{
-\item{end_date}{}
+\item{x}{Path to a \code{.dat} file}
+
+\item{site_code}{Code of the site, either \code{"KU"}, \code{"BR"}, \code{"RZ"}}
+
+\item{start_date}{The start date of the validation period}
+
+\item{end_date}{The end state of the validation period}
 }
 \value{
-
+A data frame with possible errors
 }
 \description{
-Title
+Validates Data
+}
+\examples{
+dat_filepath = system.file("dat/CR3000_Rain.dat", package = "puls")
+validator(dat_filepath, site_code = "BR",
+    start_date = as.Date("2017-07-25"), end_date = as.Date("2019-07-30"))
+
 }
