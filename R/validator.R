@@ -49,7 +49,7 @@ single_validator = function(x, start_date = as.Date("2019-07-25"), end_date = as
   x = validate_nan(x)
   x = validate_min(x, param_df = param_df)
   x = validate_max(x, param_df = param_df)
-  x = validate_longterm(x, param_df = param_df, howmanysd = 3)
+  # x = validate_longterm(x, param_df = param_df, howmanysd = 3)
 
   x
 
