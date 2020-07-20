@@ -24,7 +24,33 @@ cleaner = function(x, site_code = NULL){
   x %>%
     read_dat() %>%
     tidyr::pivot_longer(-c("TIMESTAMP", "RECORD")) %>%
-    dplyr::mutate(parameter = stringr::str_extract(name, "^[a-zA-Z]*[\\_]?[a-zA-Z]*")) %>%
-    dplyr::mutate(parameter = stringr::str_replace(parameter, "[\\_]$", "")) %>%
+    dplyr::mutate(parameter = unify_param_names(name)) %>%
     dplyr::mutate(site = site_code)
+}
+
+unify_param_names0 = function(x){
+  y = numeric(length = length(x))
+  for (i in seq_along(x)){
+    spec = stringr::str_subset(x[i], "^Spec")
+    if (length(spec) == 1){
+      y[i] = stringr::str_to_upper(spec)
+    } else {
+      non_spec = stringr::str_subset(x[i], "Spec", negate = TRUE)
+      non_spec = stringr::str_extract(non_spec, "^[a-zA-Z]*[\\_]?[a-zA-Z]*")
+      non_spec = stringr::str_replace(non_spec, "[\\_]$", "")
+      y[i] = stringr::str_to_upper(non_spec)
+    }
+  }
+  return(y)
+}
+
+unify_param_names = function(x){
+  # spec = stringr::str_which(x[i], "^Spec")
+  non_spec = stringr::str_which(x, "Spec", negate = TRUE)
+  non_spec_vec = stringr::str_extract(x[non_spec], "^[a-zA-Z]*[\\_]?[a-zA-Z]*")
+  non_spec_vec = stringr::str_replace(non_spec_vec, "[\\_]$", "")
+
+  x[non_spec] = non_spec_vec
+  x = stringr::str_to_upper(x)
+  return(x)
 }
