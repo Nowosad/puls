@@ -72,7 +72,82 @@ validate_max = function(y, param_df){
 
 #' @name validate_
 #' @export
-validate_longterm = function(y, param_df, howmanysd = 3){
+validate_longterm = function(y, param_df_ext, howmanysd = 3){
+  if (nrow(param_df_ext) > 0){
+
+    correct_df = y[["correct_df"]]
+    error_df = y[["error_df"]]
+
+    correct_df = correct_df %>%
+      mutate(DOY = lubridate::yday(TIMESTAMP),
+                                       HOUR = lubridate::hour(TIMESTAMP),
+                                       MIN = lubridate::minute(TIMESTAMP)) %>%
+      dplyr::left_join(param_df_ext, by = c("parameter", "DOY", "HOUR", "MIN"))
+
+    longterm_sds = howmanysd * correct_df$SD
+    longterm_range_min = correct_df$AVG -longterm_sds
+    longterm_range_max = correct_df$AVG + longterm_sds
+
+    problems = correct_df$value < longterm_range_min | correct_df$value > longterm_range_max
+    problems[is.na(problems)] = FALSE
+
+    new_error_df = correct_df[problems,
+                              c("TIMESTAMP", "RECORD", "name", "value")]
+    new_error_df$problem = "Values outside of the long-term range"
+
+    error_df = rbind(error_df, new_error_df)
+    correct_df = correct_df[!problems,
+                            c("TIMESTAMP", "RECORD", "name", "value", "parameter", "site")]
+
+    list(correct_df = correct_df,
+         error_df = error_df)
+  } else{
+    y
+  }
+}
+
+
+#' @name validate_
+#' @export
+validate_delta = function(y, param_df_ext, howmany = 3){
+  if (nrow(param_df_ext) > 0){
+
+    correct_df = y[["correct_df"]]
+    error_df = y[["error_df"]]
+
+    correct_df = correct_df %>%
+      mutate(DOY = lubridate::yday(TIMESTAMP),
+             HOUR = lubridate::hour(TIMESTAMP),
+             MIN = lubridate::minute(TIMESTAMP)) %>%
+      dplyr::left_join(param_df_ext, by = c("parameter", "DOY", "HOUR", "MIN"))
+
+    longterm_deltas = howmany * correct_df$DELTA
+    # longterm_range_min = correct_df$AVG - longterm_deltas
+    # longterm_range_max = correct_df$AVG + longterm_deltas
+
+    correct_df = correct_df %>%
+      mutate(delta_value = dplyr::lag(value - dplyr::lag(value)))
+
+    problems = correct_df$delta_value > longterm_deltas
+    problems[is.na(problems)] = FALSE
+
+    new_error_df = correct_df[problems,
+                              c("TIMESTAMP", "RECORD", "name", "value")]
+    new_error_df$problem = "Delta issue"
+
+    error_df = rbind(error_df, new_error_df)
+    correct_df = correct_df[!problems,
+                            c("TIMESTAMP", "RECORD", "name", "value", "parameter", "site")]
+
+    list(correct_df = correct_df,
+         error_df = error_df)
+  } else{
+    y
+  }
+}
+
+
+validate_longterm_old = function(y, param_df, howmanysd = 3){
   if (!is.na(param_df$longterm_sd)){
     longterm_sds = howmanysd * param_df$longterm_sd
     longterm_range = param_df$longterm_avg + c(-longterm_sds, longterm_sds)

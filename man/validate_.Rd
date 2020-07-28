@@ -6,6 +6,7 @@
 \alias{validate_min}
 \alias{validate_max}
 \alias{validate_longterm}
+\alias{validate_delta}
 \title{Validate Several Separate Border Cases}
 \usage{
 validate_nan(y)
@@ -14,7 +15,9 @@ validate_min(y, param_df)
 
 validate_max(y, param_df)
 
-validate_longterm(y, param_df, howmanysd = 3)
+validate_longterm(y, param_df_ext, howmanysd = 3)
+
+validate_delta(y, param_df_ext, howmany = 3)
 }
 \arguments{
 \item{y}{A list with two data frames - \code{correct_df} and \code{error_df}}

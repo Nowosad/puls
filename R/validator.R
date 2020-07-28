@@ -43,14 +43,21 @@ single_validator = function(x, start_date = as.Date("2019-07-25"), end_date = as
   # if(nrow(param_df) == 0) stop("Parameter ", parameter, " does not exist.\nTry a different one.", call. = FALSE)
   if(nrow(param_df) == 0) {
     warning("Parameter ", parameter, " does not exist.\nTry a different one.", call. = FALSE)
-    return(x)
+    # return(x)
+  } else {
+    x = validate_nan(x)
+    x = validate_min(x, param_df = param_df)
+    x = validate_max(x, param_df = param_df)
   }
 
-  x = validate_nan(x)
-  x = validate_min(x, param_df = param_df)
-  x = validate_max(x, param_df = param_df)
-  # x = validate_longterm(x, param_df = param_df, howmanysd = 3)
+  param_df_ext = extended_params  %>%
+    dplyr::filter(parameter == !!parameter)
+
+  x = validate_longterm(x, param_df_ext = param_df_ext, howmanysd = 3)
+  x = validate_delta(x, param_df_ext = param_df_ext, howmany = 3)
 
   x
 
 }
+
+
