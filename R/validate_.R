@@ -79,7 +79,7 @@ validate_longterm = function(y, param_df_ext, howmanysd = 3){
     error_df = y[["error_df"]]
 
     correct_df = correct_df %>%
-      mutate(DOY = lubridate::yday(TIMESTAMP),
+      dplyr::mutate(DOY = lubridate::yday(TIMESTAMP),
                                        HOUR = lubridate::hour(TIMESTAMP),
                                        MIN = lubridate::minute(TIMESTAMP)) %>%
       dplyr::left_join(param_df_ext, by = c("parameter", "DOY", "HOUR", "MIN"))
@@ -116,7 +116,7 @@ validate_delta = function(y, param_df_ext, howmany = 3){
     error_df = y[["error_df"]]
 
     correct_df = correct_df %>%
-      mutate(DOY = lubridate::yday(TIMESTAMP),
+      dplyr::mutate(DOY = lubridate::yday(TIMESTAMP),
              HOUR = lubridate::hour(TIMESTAMP),
              MIN = lubridate::minute(TIMESTAMP)) %>%
       dplyr::left_join(param_df_ext, by = c("parameter", "DOY", "HOUR", "MIN"))
@@ -126,7 +126,7 @@ validate_delta = function(y, param_df_ext, howmany = 3){
     # longterm_range_max = correct_df$AVG + longterm_deltas
 
     correct_df = correct_df %>%
-      mutate(delta_value = dplyr::lag(value - dplyr::lag(value)))
+      dplyr::mutate(delta_value = dplyr::lag(value - dplyr::lag(value)))
 
     problems = correct_df$delta_value > longterm_deltas
     problems[is.na(problems)] = FALSE
