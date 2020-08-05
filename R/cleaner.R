@@ -21,11 +21,19 @@ cleaner = function(x, site_code = NULL){
     )
   }
 
-  x %>%
-    read_dat() %>%
-    tidyr::pivot_longer(-c("TIMESTAMP", "RECORD")) %>%
-    dplyr::mutate(parameter = unify_param_names(name)) %>%
-    dplyr::mutate(site = site_code)
+  if (tools::file_ext(x) == "dat"){
+    result = x %>%
+      read_dat() %>%
+      tidyr::pivot_longer(-c("TIMESTAMP", "RECORD")) %>%
+      dplyr::mutate(parameter = unify_param_names(name)) %>%
+      dplyr::mutate(site = site_code)
+  } #else {
+    #x %>%
+    #  read_ghg()
+  #}
+
+  return(result)
+
 }
 
 unify_param_names0 = function(x){
