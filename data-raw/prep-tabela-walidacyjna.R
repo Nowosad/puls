@@ -9,6 +9,7 @@ basic_params = read_excel("inst/tables/basic_validation_BR_RZ_MS_pp_.xlsx") %>%
   filter(!is.na(site)) %>%
   mutate(longterm_avg = as.numeric(longterm_avg)) %>%
   mutate(longterm_sd = as.numeric(longterm_sd)) %>%
+  mutate(parameter = stringr::str_to_upper(parameter)) %>%
   as.data.frame()
 
 # extended params ---------------------------------------------------------
