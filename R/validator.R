@@ -14,6 +14,7 @@
 #'     start_date = as.Date("2017-07-25"), end_date = as.Date("2019-07-30"))
 #'
 validator = function(x, site_code = NULL, start_date = as.Date("2019-07-25"), end_date = as.Date("2019-07-30")){
+  message("DATASET: ", x)
   x %>%
     cleaner(site_code = site_code) %>%
     dplyr::group_split(parameter) %>%
@@ -42,9 +43,10 @@ single_validator = function(x, start_date = as.Date("2019-07-25"), end_date = as
 
   # if(nrow(param_df) == 0) stop("Parameter ", parameter, " does not exist.\nTry a different one.", call. = FALSE)
   if(nrow(param_df) == 0) {
-    warning("Parameter ", parameter, " does not exist.\nTry a different one.", call. = FALSE)
+    message("Parameter: ", parameter, " validation does not exist!")
     # return(x)
   } else {
+    message("Parameter: ", parameter, " validated!")
     x = validate_nan(x)
     x = validate_min(x, param_df = param_df)
     x = validate_max(x, param_df = param_df)
