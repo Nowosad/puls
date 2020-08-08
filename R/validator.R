@@ -14,20 +14,28 @@
 #'     start_date = as.Date("2017-07-25"), end_date = as.Date("2019-07-30"))
 #'
 validator = function(x, site_code = NULL, start_date = as.Date("2019-07-25"), end_date = as.Date("2019-07-30")){
-  message("DATASET: ", x)
+  x_basename = basename(x)
+  message("DATASET: ", x_basename)
+  x = x %>%
+    cleaner(site_code = site_code)  %>%
+    dplyr::filter(dplyr::between(as.Date(TIMESTAMP), start_date, end_date))
+
+  if(nrow(x) == 0) {
+    message("No data exists between: ", start_date, " and ", end_date,  "!")
+    invisible(return(NULL))
+  }
+
   x %>%
-    cleaner(site_code = site_code) %>%
     dplyr::group_split(parameter) %>%
-    purrr::map(single_validator, start_date, end_date) %>%
+    purrr::map(single_validator) %>%
     purrr::map_df("error_df") %>%
-    dplyr::mutate(filename = basename(x)) %>%
+    dplyr::mutate(filename = x_basename) %>%
     dplyr::select(filename, dplyr::everything())
 }
-single_validator = function(x, start_date = as.Date("2019-07-25"), end_date = as.Date("2019-07-30")){
+single_validator = function(x){
   parameter = unique(x$parameter)
 
   x = x %>%
-    dplyr::filter(dplyr::between(as.Date(TIMESTAMP), start_date, end_date)) %>%
     dplyr::filter(parameter == !!parameter)
 
   param_df = basic_params %>%
@@ -43,10 +51,10 @@ single_validator = function(x, start_date = as.Date("2019-07-25"), end_date = as
 
   # if(nrow(param_df) == 0) stop("Parameter ", parameter, " does not exist.\nTry a different one.", call. = FALSE)
   if(nrow(param_df) == 0) {
-    message("Parameter: ", parameter, " validation does not exist!")
+    message("Parameter: ", parameter, ". Basic validation does not exist!")
     # return(x)
   } else {
-    message("Parameter: ", parameter, " validated!")
+    message("Parameter: ", parameter, ". Basic validation!")
     x = validate_nan(x)
     x = validate_min(x, param_df = param_df)
     x = validate_max(x, param_df = param_df)
@@ -55,11 +63,13 @@ single_validator = function(x, start_date = as.Date("2019-07-25"), end_date = as
   param_df_ext = extended_params  %>%
     dplyr::filter(parameter == !!parameter)
 
-  x = validate_longterm(x, param_df_ext = param_df_ext, howmanysd = 3)
-  x = validate_delta(x, param_df_ext = param_df_ext, howmany = 3)
-
+  if(nrow(param_df_ext) == 0) {
+    message("Parameter: ", parameter, ". Extended validation does not exist!")
+    # return(x)
+  } else {
+    message("Parameter: ", parameter, ". Extended validation!")
+    x = validate_longterm(x, param_df_ext = param_df_ext, howmanysd = 3)
+    x = validate_delta(x, param_df_ext = param_df_ext, howmany = 3)
+  }
   x
-
 }
-
-
