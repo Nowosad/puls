@@ -13,15 +13,15 @@
 #' validator(dat_filepath, site_code = "BR",
 #'     start_date = as.Date("2017-07-25"), end_date = as.Date("2019-07-30"))
 #'
-validator = function(x, site_code = NULL, start_date = as.Date("2019-07-25"), end_date = as.Date("2019-07-30")){
+validator = function(x, site_code = NULL, start_date = as.Date(-Inf, origin = "1970-01-01"), end_date = as.Date(Inf, origin = "1970-01-01")){
   x_basename = basename(x)
   message("DATASET: ", x_basename)
   x = x %>%
     cleaner(site_code = site_code)  %>%
-    dplyr::filter(dplyr::between(as.Date(TIMESTAMP), start_date, end_date))
+    dplyr::filter(dplyr::between(as.Date(TIMESTAMP), as.Date(start_date), as.Date(end_date)))
 
   if(nrow(x) == 0) {
-    message("No data exists between: ", start_date, " and ", end_date,  "!")
+    message("No data exists between ", start_date, " and ", end_date,  "!")
     invisible(return(NULL))
   }
 

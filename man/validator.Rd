@@ -7,8 +7,8 @@
 validator(
   x,
   site_code = NULL,
-  start_date = as.Date("2019-07-25"),
-  end_date = as.Date("2019-07-30")
+  start_date = as.Date(-Inf, origin = "1970-01-01"),
+  end_date = as.Date(Inf, origin = "1970-01-01")
 )
 }
 \arguments{
