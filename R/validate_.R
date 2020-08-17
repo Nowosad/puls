@@ -38,7 +38,8 @@ validate_min = function(y, param_df){
     error_df = y[["error_df"]]
 
     new_error_df = correct_df[correct_df$value < param_df$min_value, c("TIMESTAMP", "RECORD", "name", "value")]
-    new_error_df$problem = "Values below the expected minimum"
+    new_error_df$problem = paste("Values below the expected minimum of",
+                                 param_df$min_value)
 
     error_df = rbind(error_df, new_error_df)
     correct_df = correct_df[correct_df$value >= param_df$min_value, ]
@@ -58,7 +59,8 @@ validate_max = function(y, param_df){
     error_df = y[["error_df"]]
 
     new_error_df = correct_df[correct_df$value > param_df$max_value, c("TIMESTAMP", "RECORD", "name", "value")]
-    new_error_df$problem = "Values above the expected maximum"
+    new_error_df$problem = paste("Values above the expected maximum of",
+                                 param_df$max_value)
 
     error_df = rbind(error_df, new_error_df)
     correct_df = correct_df[correct_df$value <= param_df$max_value, ]
@@ -90,10 +92,14 @@ validate_longterm = function(y, param_df_ext, howmanysd = 3){
 
     problems = correct_df$value < longterm_range_min | correct_df$value > longterm_range_max
     problems[is.na(problems)] = FALSE
+    longterm_range_min = longterm_range_min[problems]
+    longterm_range_max = longterm_range_max[problems]
 
     new_error_df = correct_df[problems,
                               c("TIMESTAMP", "RECORD", "name", "value")]
-    new_error_df$problem = "Values outside of the long-term range"
+    new_error_df$problem = paste("Values outside of the long-term range between",
+                                 longterm_range_min, " and", longterm_range_max)
+
 
     error_df = rbind(error_df, new_error_df)
     correct_df = correct_df[!problems,
@@ -130,10 +136,14 @@ validate_delta = function(y, param_df_ext, howmany = 3){
 
     problems = correct_df$delta_value > longterm_deltas
     problems[is.na(problems)] = FALSE
+    longterm_deltas = longterm_deltas[problems]
 
     new_error_df = correct_df[problems,
                               c("TIMESTAMP", "RECORD", "name", "value")]
-    new_error_df$problem = "Delta issue"
+    new_error_df$problem = paste("Delta issue: change of ",
+                                 correct_df[problems, "delta_value", drop = TRUE],
+                                 " instead of below",
+                                 longterm_deltas)
 
     error_df = rbind(error_df, new_error_df)
     correct_df = correct_df[!problems,
