@@ -47,10 +47,32 @@ ui = bootstrapPage(
                                          separator = " do ",
                                          # start = as.Date(-Inf, origin = "1970-01-01"),
                                          # end = as.Date(Inf, origin = "1970-01-01"),
-                                         start = as.Date("2015-01-01"),
-                                         end = Sys.Date(),
+                                         # start = as.Date("2015-01-01"),
+                                         # end = Sys.Date(),
                                          weekstart = 1,
-                                         language = "pl")
+                                         language = "pl"),
+                          textInput("xlab",
+                                    "X axis label",
+                                    value = "Termin"
+                                    ),
+                          textInput("ylab",
+                                    "Y axis label",
+                                    value = "Wartość"
+                          ),
+                          colourInput("col1",
+                                    "Color 1",
+                                    value = "#FFD662FF"
+                          ),
+                          colourInput("col2",
+                                    "Color 2",
+                                    value = "#00539CFF"
+                          ),
+                          textInput("legend",
+                                    "Legend title",
+                                    value = "Legenda"
+                          ),
+                          downloadButton("png", "png"),
+                          downloadButton("eps", "eps"),
                         ),
                         mainPanel(
                           plotOutput("dataPlot")
