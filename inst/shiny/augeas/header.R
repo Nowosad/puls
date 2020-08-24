@@ -6,5 +6,6 @@ library(purrr)
 library(puls)
 library(tidyr)
 library(stringr)
-
+library(colourpicker)
+library(shinyjs)
 
