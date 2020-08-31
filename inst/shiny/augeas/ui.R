@@ -8,7 +8,7 @@ ui = bootstrapPage(
              "Station Watch Dog",
              id = "nav",
 
-             tabPanel("Ostrzeżenia",
+             tabPanel("Ostrzezenia",
                       sidebarLayout(
                         sidebarPanel(
                           dateRangeInput("errorsdaterange",
@@ -57,13 +57,13 @@ ui = bootstrapPage(
                                     ),
                           textInput("ylab",
                                     "Y axis label",
-                                    value = "Wartość"
+                                    value = "Wartosc"
                           ),
-                          colourInput("col1",
+                          colourpicker::colourInput("col1",
                                     "Color 1",
                                     value = "#FFD662FF"
                           ),
-                          colourInput("col2",
+                          colourpicker::colourInput("col2",
                                     "Color 2",
                                     value = "#00539CFF"
                           ),
@@ -73,9 +73,21 @@ ui = bootstrapPage(
                           ),
                           downloadButton("png", "png"),
                           downloadButton("eps", "eps"),
+                          selectInput("file2",
+                                      "File2:",
+                                      choices = stacje),
+                          selectInput("var2_1",
+                                      "Name (yellow):",
+                                      choices = ""),
+                          selectInput("var2_2",
+                                      "Name (blue):",
+                                      choices = ""),
+                          downloadButton("png2", "png"),
+                          downloadButton("eps2", "eps"),
                         ),
                         mainPanel(
-                          plotOutput("dataPlot")
+                          plotOutput("dataPlot"),
+                          plotOutput("dataPlot2")
                         )
                       )
              )
