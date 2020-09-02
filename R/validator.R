@@ -4,6 +4,12 @@
 #' @param site_code Code of the site, either `"KU"`, `"BR"`, `"RZ"`
 #' @param start_date The start date of the validation period
 #' @param end_date The end state of the validation period
+#' @param validation_table Additional argument: A path to a .xlsx file
+#' with a basic validation table.
+#' By default, a built-in table is used.
+#' @param validation_table_ext Additional argument: A path to a .xlsx file
+#'with an extended validation table.
+#' By default, a built-in table is used.
 #'
 #' @return A data frame with possible errors
 #' @export

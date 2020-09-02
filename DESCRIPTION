@@ -21,7 +21,8 @@ Imports:
     stringi,
     readr,
     purrr,
-    magrittr
+    magrittr,
+    readxl
 Suggests:
     shiny,
     shinythemes,
