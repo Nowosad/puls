@@ -8,7 +8,9 @@ validator(
   x,
   site_code = NULL,
   start_date = as.Date(-Inf, origin = "1970-01-01"),
-  end_date = as.Date(Inf, origin = "1970-01-01")
+  end_date = as.Date(Inf, origin = "1970-01-01"),
+  validation_table,
+  validation_table_ext
 )
 }
 \arguments{
