@@ -1,10 +1,12 @@
-# "inst/tables/basic_validation_BR_RZ_MS_pp_.xlsx"
+# x = "inst/tables/basic_validation_BR_RZ_MS_pp_.xlsx"
 prep_basic_validation = function(x){
-  basic_params = readxl::read_excel(x) %>%
+  basic_params = suppressMessages(readxl::read_excel(x))
+
+  basic_params = basic_params %>%
     dplyr::select(site:longterm_sd) %>%
     dplyr::filter(!is.na(site)) %>%
-    dplyr::mutate(longterm_avg = as.numeric(longterm_avg)) %>%
-    dplyr::mutate(longterm_sd = as.numeric(longterm_sd)) %>%
+    dplyr::mutate(longterm_avg = {suppressWarnings(as.numeric(longterm_avg))}) %>%
+    dplyr::mutate(longterm_sd = {suppressWarnings(as.numeric(longterm_sd))}) %>%
     dplyr::mutate(parameter = stringr::str_to_upper(parameter)) %>%
     as.data.frame()
   return(basic_params)
@@ -12,7 +14,7 @@ prep_basic_validation = function(x){
 
 # x = "inst/tables/Tabela_walidacyjna.xlsx"
 prep_extended_validation = function(x){
-  tw = readxl::read_excel(x)
+  tw = suppressWarnings(readxl::read_excel(x))
   tw2 = tw %>%
     tidyr::pivot_longer(cols = PPFD_AVG:RH_DELTA)%>%
     dplyr::mutate(property = stringi::stri_extract_last_regex(str = name,
