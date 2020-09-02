@@ -13,26 +13,49 @@
 #' validator(dat_filepath, site_code = "BR",
 #'     start_date = as.Date("2017-07-25"), end_date = as.Date("2019-07-30"))
 #'
-validator = function(x, site_code = NULL, start_date = as.Date(-Inf, origin = "1970-01-01"), end_date = as.Date(Inf, origin = "1970-01-01")){
+validator = function(x,
+                     site_code = NULL,
+                     start_date = as.Date(-Inf, origin = "1970-01-01"),
+                     end_date = as.Date(Inf, origin = "1970-01-01"),
+                     validation_table,
+                     validation_table_ext){
   x_basename = basename(x)
   message("DATASET: ", x_basename)
   x = x %>%
     cleaner(site_code = site_code)  %>%
-    dplyr::filter(dplyr::between(as.Date(TIMESTAMP), as.Date(start_date), as.Date(end_date)))
+    dplyr::filter(dplyr::between(as.Date(TIMESTAMP),
+                                 as.Date(start_date),
+                                 as.Date(end_date)))
 
   if(nrow(x) == 0) {
     message("No data exists between ", start_date, " and ", end_date,  "!")
     invisible(return(NULL))
   }
 
+  if (!missing(validation_table)){
+    basic_params = prep_basic_validation(validation_table)
+  } else {
+    basic_params = puls:::basic_params
+  }
+
+  if (!missing(validation_table_ext)){
+    extended_params = prep_extended_validation(validation_table_ext)
+  } else {
+    extended_params = puls:::extended_params
+  }
+
   x %>%
     dplyr::group_split(parameter) %>%
-    purrr::map(single_validator) %>%
+    purrr::map(single_validator,
+               basic_params = basic_params,
+               extended_params = extended_params) %>%
     purrr::map_df("error_df") %>%
     dplyr::mutate(filename = x_basename) %>%
     dplyr::select(filename, dplyr::everything())
 }
-single_validator = function(x){
+single_validator = function(x,
+                            basic_params,
+                            extended_params){
   parameter = unique(x$parameter)
 
   x = x %>%

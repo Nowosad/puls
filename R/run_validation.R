@@ -1,5 +1,11 @@
 #' @export
-run_validation = function(data_folder = "data", result_folder = "validation", start_date = as.Date(-Inf, origin = "1970-01-01"), end_date = as.Date(Inf, origin = "1970-01-01")){
+run_validation = function(data_folder = "data",
+                          result_folder = "validation",
+                          start_date = as.Date(-Inf, origin = "1970-01-01"),
+                          end_date = as.Date(Inf, origin = "1970-01-01"),
+                          validation_table,
+                          validation_table_ext){
+
   brody_files = dir(paste0(data_folder, "/Brody"),
                     pattern = ".dat", full.names = TRUE)
   kusowo_files = dir(paste0(data_folder, "/Kusowo"),
@@ -16,7 +22,9 @@ run_validation = function(data_folder = "data", result_folder = "validation", st
   brody_error = purrr::map_df(brody_files,
                               validator,
                               start_date = start_date,
-                              end_date = end_date)
+                              end_date = end_date,
+                              validation_table = validation_table,
+                              validation_table_ext = validation_table_ext)
   # saveRDS(brody_error, "brody_error.rds")
   fst::write_fst(brody_error, paste0(result_folder, "/brody_error.fst"))
 
