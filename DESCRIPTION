@@ -1,6 +1,6 @@
 Package: puls
 Title: Misc Functions of the Laboratory of Bioclimatology, PULS Poznan 
-Version: 0.4.1
+Version: 0.5.0
 Authors@R: 
     person(given = "Jakub",
            family = "Nowosad",
@@ -18,6 +18,7 @@ Imports:
     dplyr,
     tidyr,
     stringr,
+    stringi,
     readr,
     purrr,
     magrittr
