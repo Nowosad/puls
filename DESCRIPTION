@@ -1,6 +1,6 @@
 Package: puls
 Title: Misc Functions of the Laboratory of Bioclimatology, PULS Poznan 
-Version: 0.5.0
+Version: 0.5.1
 Authors@R: 
     person(given = "Jakub",
            family = "Nowosad",
@@ -11,7 +11,7 @@ Description: A set of tools to read and validate data gathered by the Laboratory
 License: `use_mit_license()`, `use_gpl3_license()` or friends to
     pick a license
 Depends: 
-    R (>= 3.6)
+    R (>= 3.5)
 Imports:
     fst,
     lubridate,
