@@ -3,6 +3,8 @@
 #' This function is used iternally in the `validator()` function.
 #'
 #' @param Path to a `.dat` file
+#' @param start_date The start date of the validation period
+#' @param end_date The end state of the validation period
 #'
 #' @return A reformatted data frame with a TIMESTAMP, RECORD, name, value, parameter, and site
 #' @export
@@ -10,7 +12,9 @@
 #' @examples
 #' dat_filepath = system.file("dat/CR3000_Rain.dat", package = "puls")
 #' cleaner(dat_filepath, "BR")
-cleaner = function(x, site_code = NULL){
+cleaner = function(x, site_code = NULL,
+                   start_date = as.Date(-Inf, origin = "1970-01-01"),
+                   end_date = as.Date(Inf, origin = "1970-01-01")){
 
   if (is.null(site_code)){
     folder_name = basename(dirname(x))
@@ -23,7 +27,10 @@ cleaner = function(x, site_code = NULL){
 
   if (tools::file_ext(x) == "dat"){
     result = x %>%
-      read_dat() %>%
+      read_dat()  %>%
+      dplyr::filter(dplyr::between(as.Date(TIMESTAMP),
+                                   as.Date(start_date),
+                                   as.Date(end_date))) %>%
       tidyr::pivot_longer(-c("TIMESTAMP", "RECORD")) %>%
       dplyr::mutate(parameter = unify_param_names(name)) %>%
       dplyr::mutate(site = site_code)
