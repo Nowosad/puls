@@ -27,11 +27,12 @@ validator = function(x,
                      validation_table_ext){
   x_basename = basename(x)
   message("DATASET: ", x_basename)
-  x = x %>%
-    cleaner(site_code = site_code)  %>%
+  x = x  %>%
     dplyr::filter(dplyr::between(as.Date(TIMESTAMP),
                                  as.Date(start_date),
                                  as.Date(end_date)))
+  x = x %>%
+    cleaner(site_code = site_code)
 
   if(nrow(x) == 0) {
     message("No data exists between ", start_date, " and ", end_date,  "!")
