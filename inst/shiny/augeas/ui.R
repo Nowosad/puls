@@ -1,5 +1,5 @@
-start_date = as.Date("2020-06-01")
-end_date = as.Date("2020-06-01")
+end_date = Sys.Date()
+start_date = Sys.Date() - 30
 
 # Define UI for application that draws a histogram
 ui = bootstrapPage(
@@ -20,8 +20,8 @@ ui = bootstrapPage(
                                          language = "pl")
                         ),
                         mainPanel(
-                          h2("Brody"),
-                          DT::dataTableOutput("error_brodyTable"),
+                          # h2("Brody"),
+                          # DT::dataTableOutput("error_brodyTable"),
                           h2("Kusowo"),
                           DT::dataTableOutput("error_kusowoTable"),
                           h2("Rzecin"),

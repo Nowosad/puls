@@ -8,7 +8,10 @@ server = function(input, output, session) {
   output$error_brodyTable = DT::renderDataTable({
     dat_brody = DT::datatable(error_brody_sel(),
                                filter = list(position = "top", clear = FALSE),
-                               options = list(search = list(regex = TRUE, caseInsensitive = FALSE))) %>%
+                              options = list(
+                                search = list(regex = TRUE, caseInsensitive = FALSE),
+                                order = list(list(2, "desc"))
+                              )) %>%
       DT::formatStyle("problem", target = "row",
                       backgroundColor = DT::styleEqual("NaN values", "#FF4136"))
     return(dat_brody)
@@ -20,7 +23,10 @@ server = function(input, output, session) {
   output$error_kusowoTable = DT::renderDataTable({
     dat_kusowo = DT::datatable(error_kusowo_sel(),
         filter = list(position = "top", clear = FALSE),
-        options = list(search = list(regex = TRUE, caseInsensitive = FALSE))) %>%
+        options = list(
+          search = list(regex = TRUE, caseInsensitive = FALSE),
+          order = list(list(2, "desc"))
+          )) %>%
       DT::formatStyle("problem", target = "row",
                       backgroundColor = DT::styleEqual("NaN values", "#FF4136"))
     return(dat_kusowo)
@@ -32,7 +38,10 @@ server = function(input, output, session) {
   output$error_rzecinTable = DT::renderDataTable({
     dat_rzecin = DT::datatable(error_rzecin_sel(),
                                filter = list(position = "top", clear = FALSE),
-                               options = list(search = list(regex = TRUE, caseInsensitive = FALSE))) %>%
+                               options = list(
+                                 search = list(regex = TRUE, caseInsensitive = FALSE),
+                                 order = list(list(2, "desc"))
+                               )) %>%
       DT::formatStyle("problem", target = "row",
                       backgroundColor = DT::styleEqual("NaN values", "#FF4136"))
     return(dat_rzecin)
