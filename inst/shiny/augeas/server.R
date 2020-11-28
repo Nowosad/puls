@@ -169,6 +169,7 @@ server = function(input, output, session) {
       ggsave(file, plot = my_plot2(), device = "eps")
     }
   )
+  session$allowReconnect("force")
 }
 
 # Run the application
