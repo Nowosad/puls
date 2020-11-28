@@ -30,9 +30,13 @@ cleaner = function(x, site_code = NULL,
     result = dplyr::filter(result, dplyr::between(as.Date(TIMESTAMP),
                                    as.Date(start_date),
                                    as.Date(end_date)))
+    param_nrow = nrow(result)
+    param_colnames = colnames(result)[(!colnames(result) %in% c("TIMESTAMP", "RECORD"))]
+    param_names = unify_param_names(param_colnames)
     # result = tidyr::pivot_longer(result, -c("TIMESTAMP", "RECORD"))
     result = tidyr::gather(result, name, value, -TIMESTAMP, -RECORD)
-    result = dplyr::mutate(result, parameter = unify_param_names(name))
+    # cleaner_names = unify_param_names(result$name)
+    result$parameter = rep(param_names, each = param_nrow)
     result = dplyr::mutate(result, site = site_code)
   } #else {
     #x %>%
