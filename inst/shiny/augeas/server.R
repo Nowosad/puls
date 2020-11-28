@@ -49,6 +49,7 @@ server = function(input, output, session) {
   # plot 1
   outData = reactive({
     cleaner(input$file)
+    # cleaner(input$file, site_code = NULL, input$plotdaterange[1], input$plotdaterange[2])
   })
   outVar = reactive({
     c("Blank", unique(outData()$name))
@@ -117,7 +118,7 @@ server = function(input, output, session) {
   # plot 2
   # plot 1
   outData2 = reactive({
-    cleaner(input$file2)
+    cleaner(input$file2, site_code = NULL, input$plotdaterange[1], input$plotdaterange[2])
   })
   outVar2 = reactive({
     c("Blank", unique(outData2()$name))
@@ -130,9 +131,7 @@ server = function(input, output, session) {
     )})
   my_plot2 = reactive({
     plot_data2 = outData2() %>%
-      subset(name %in% c(input$var2_1, input$var2_2))  %>%
-      filter(dplyr::between(as.Date(TIMESTAMP),
-                            input$plotdaterange[1], input$plotdaterange[2]))
+      subset(name %in% c(input$var2_1, input$var2_2))
 
     time_diff = input$plotdaterange[2] - input$plotdaterange[1]
     time_diff = as.numeric(time_diff, "days")

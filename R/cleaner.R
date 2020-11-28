@@ -2,7 +2,7 @@
 #'
 #' This function is used iternally in the `validator()` function.
 #'
-#' @param Path to a `.dat` file
+#' @param x to a `.dat` file
 #' @param start_date The start date of the validation period
 #' @param end_date The end state of the validation period
 #'
@@ -26,14 +26,14 @@ cleaner = function(x, site_code = NULL,
   }
 
   if (tools::file_ext(x) == "dat"){
-    result = x %>%
-      read_dat()  %>%
-      dplyr::filter(dplyr::between(as.Date(TIMESTAMP),
+    result = read_dat(x)
+    result = dplyr::filter(result, dplyr::between(as.Date(TIMESTAMP),
                                    as.Date(start_date),
-                                   as.Date(end_date))) %>%
-      tidyr::pivot_longer(-c("TIMESTAMP", "RECORD")) %>%
-      dplyr::mutate(parameter = unify_param_names(name)) %>%
-      dplyr::mutate(site = site_code)
+                                   as.Date(end_date)))
+    # result = tidyr::pivot_longer(result, -c("TIMESTAMP", "RECORD"))
+    result = tidyr::gather(result, name, value, -TIMESTAMP, -RECORD)
+    result = dplyr::mutate(result, parameter = unify_param_names(name))
+    result = dplyr::mutate(result, site = site_code)
   } #else {
     #x %>%
     #  read_ghg()
