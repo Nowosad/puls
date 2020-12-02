@@ -17,8 +17,8 @@ ui = bootstrapPage(
                                          language = "pl")
                         ),
                         mainPanel(
-                          # h2("Brody"),
-                          # DT::dataTableOutput("error_brodyTable"),
+                          h2("Brody"),
+                          DT::dataTableOutput("error_brodyTable"),
                           h2("Kusowo"),
                           DT::dataTableOutput("error_kusowoTable"),
                           h2("Rzecin"),
