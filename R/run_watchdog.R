@@ -19,7 +19,7 @@ run_watchdog = function(data_folder, result_folder, ...) {
                 Kusowo = kusowo_files,
                 Rzecin = rzecin_files)
 
-  # server_env$brody_error = fst::read_fst(paste0(result_folder, "/brody_error.fst"))
+  server_env$brody_error = fst::read_fst(paste0(result_folder, "/brody_error.fst"))
   server_env$kusowo_error = fst::read_fst(paste0(result_folder, "/kusowo_error.fst"))
   server_env$rzecin_error = fst::read_fst(paste0(result_folder, "/rzecin_error.fst"))
 
