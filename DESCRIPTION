@@ -1,6 +1,6 @@
 Package: puls
 Title: Misc Functions of the Laboratory of Bioclimatology, PULS Poznan 
-Version: 0.5.2
+Version: 0.5.3
 Authors@R: 
     person(given = "Jakub",
            family = "Nowosad",

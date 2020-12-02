@@ -1,5 +1,12 @@
 # Define server logic required to draw a histogram
 server = function(input, output, session) {
+
+  observe({
+    updateDateRangeInput(session, "errorsdaterange",
+                         start = Sys.Date() - 30,
+                         end = Sys.Date())
+  })
+
   # error data
   error_brody_sel = reactive({
     brody_error %>%

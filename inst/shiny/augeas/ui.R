@@ -1,6 +1,3 @@
-end_date = Sys.Date()
-start_date = Sys.Date() - 30
-
 # Define UI for application that draws a histogram
 ui = bootstrapPage(
   navbarPage(theme = shinytheme("simplex"),
@@ -14,8 +11,8 @@ ui = bootstrapPage(
                           dateRangeInput("errorsdaterange",
                                          "Wybrany zakres czasowy",
                                          separator = " do ",
-                                         start = start_date,
-                                         end = end_date,
+                                         #start = start_date,
+                                         #end = end_date,
                                          weekstart = 1,
                                          language = "pl")
                         ),
