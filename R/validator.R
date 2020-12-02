@@ -17,7 +17,7 @@
 #' @examples
 #' dat_filepath = system.file("dat/CR3000_Rain.dat", package = "puls")
 #' validator(dat_filepath, site_code = "BR",
-#'     start_date = as.Date("2017-07-25"), end_date = as.Date("2019-07-30"))
+#'     start_date = as.Date("2017-07-25"), end_date = as.Date("2020-07-30"))
 #'
 validator = function(x,
                      site_code = NULL,
@@ -30,8 +30,17 @@ validator = function(x,
   x = cleaner(x, site_code = site_code, start_date, end_date)
 
   if(nrow(x) == 0) {
-    message("No data exists between ", start_date, " and ", end_date,  "!")
-    invisible(return(NULL))
+    m = paste0("No data exists between ", start_date, " and ", end_date,  "!")
+    message(m)
+    x = data.frame(
+      filename = x_basename,
+      TIMESTAMP = numeric(),
+      RECORD = numeric(),
+      name = character(),
+      value = numeric(),
+      problem = m
+    )
+    return(x)
   }
 
   if (!missing(validation_table)){

@@ -39,6 +39,6 @@ Validates Data
 \examples{
 dat_filepath = system.file("dat/CR3000_Rain.dat", package = "puls")
 validator(dat_filepath, site_code = "BR",
-    start_date = as.Date("2017-07-25"), end_date = as.Date("2019-07-30"))
+    start_date = as.Date("2017-07-25"), end_date = as.Date("2020-07-30"))
 
 }

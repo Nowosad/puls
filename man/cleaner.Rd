@@ -4,10 +4,19 @@
 \alias{cleaner}
 \title{Prepares Input Data}
 \usage{
-cleaner(x, site_code = NULL)
+cleaner(
+  x,
+  site_code = NULL,
+  start_date = as.Date(-Inf, origin = "1970-01-01"),
+  end_date = as.Date(Inf, origin = "1970-01-01")
+)
 }
 \arguments{
-\item{Path}{to a \code{.dat} file}
+\item{x}{to a \code{.dat} file}
+
+\item{start_date}{The start date of the validation period}
+
+\item{end_date}{The end state of the validation period}
 }
 \value{
 A reformatted data frame with a TIMESTAMP, RECORD, name, value, parameter, and site
