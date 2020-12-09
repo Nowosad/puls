@@ -34,10 +34,10 @@ validator = function(x,
     message(m)
     x = data.frame(
       filename = x_basename,
-      TIMESTAMP = numeric(),
-      RECORD = numeric(),
-      name = character(),
-      value = numeric(),
+      TIMESTAMP = as.POSIXct(NA),
+      RECORD = NA_real_,
+      name = NA_character_,
+      value = NA_real_,
       problem = m
     )
     return(x)
